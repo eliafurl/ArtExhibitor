@@ -12,7 +12,7 @@ class TestNFTFetcher(unittest.TestCase):
     def test_fetch_nfts(self):
         # Mock response
         mock_response = {
-            "assets": [
+            "nfts": [
                 {
                     "name": "Test NFT",
                     "description": "A test NFT",

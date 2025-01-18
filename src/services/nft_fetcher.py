@@ -7,4 +7,4 @@ class NFTFetcher:
 
     def fetch_nfts(self, wallet: str) -> List[NFTMetadata]:
         raw_data = self.api_client.get_assets(wallet)
-        return [NFTMetadata.from_api_response(asset) for asset in raw_data.get("assets", [])]
+        return [NFTMetadata.from_api_response(nft) for nft in raw_data.get("nfts", [])]
