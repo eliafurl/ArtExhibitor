@@ -1,0 +1,60 @@
+# Virtual environment
+art_exhibitor/
+
+# Python cache files
+*.pyc
+*.pyo
+__pycache__/
+
+# IDE specific files
+.vscode/
+.idea/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Test coverage reports
+htmlcov/
+.coverage
+*.cover
+*.log
+
+# Pytest cache
+.cache/
+
+# Environment variables
+.env
+.env.*
+
+# Byte-compiled and logs
+*.log
+*.pot
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Compiled Python files
+*.py[cod]
+*$py.class
+
+# Packages
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+
+# pipenv
+Pipfile
+Pipfile.lock
+
+# Temporary files
+*.swp
+*.swo
+~*
+
+# Backup files
+*.bak
+*.tmp
+*.old
