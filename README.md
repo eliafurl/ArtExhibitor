@@ -1,6 +1,6 @@
 # Art Exhibitor
 
-Welcome to the Art Exhibitor project! This application retrieves and displays NFTs from wallet addresses using the OpenSea API. It includes modularized backend architecture, environment variable management, and unit tests.
+Welcome to the Art Exhibitor project! This application retrieves and displays NFTs from wallet addresses using the OpenSea API. It includes modularized backend architecture, environment variable management, unit tests, and a React-based frontend.
 
 ---
 
@@ -10,9 +10,12 @@ Welcome to the Art Exhibitor project! This application retrieves and displays NF
   - [**Features**](#features)
   - [**Prerequisites**](#prerequisites)
   - [**Installation**](#installation)
-  - [**Configuration**](#configuration)
+  - [**BackEnd Configuration**](#backend-configuration)
+  - [**Frontend Setup**](#frontend-setup)
   - [**Usage**](#usage)
   - [**Testing**](#testing)
+    - [Backend](#backend)
+    - [Frontend](#frontend)
   - [**Contributing**](#contributing)
   - [Class Descriptions](#class-descriptions)
     - [`ArtExhibitor`](#artexhibitor)
@@ -24,13 +27,17 @@ Welcome to the Art Exhibitor project! This application retrieves and displays NF
 
 ## **Features**
 - Fetch NFT metadata from wallet addresses using the OpenSea API.
+- Display NFTs in a customizable slideshow with user-configurable settings.
+- Show relevant NFT metadata (e.g., artist name, artwork title).
+- Add/remove wallets and hide specific NFTs.
 
 ---
 
 ## **Prerequisites**
 1. **Python**: Version 3.10 or later.
-2. **Pip**: Ensure you have `pip` installed.
-3. **Virtual Environment (Recommended)**: Use Python’s `venv` module for managing dependencies.
+2. **Node.js**: Version 16 or later.
+3. **Pip**: Ensure you have `pip` installed.
+4. **Virtual Environment (Recommended)**: Use Python’s `venv` module for managing dependencies.
 
 ---
 
@@ -41,21 +48,35 @@ Welcome to the Art Exhibitor project! This application retrieves and displays NF
    cd ArtExhibitor
    ```
 
-2. Create and activate a virtual environment:
-   ```bash
-   python -m venv art_exhibitor
-   source art_exhibitor/bin/activate  # For Linux/Mac
-   art_exhibitor\Scripts\activate   # For Windows
-   ```
+2. **Backend Setup**:
+   - Create and activate a virtual environment:
+     ```bash
+     python -m venv art_exhibitor
+     source art_exhibitor/bin/activate  # For Linux/Mac
+     art_exhibitor\Scripts\activate   # For Windows
+     ```
+   - Install the required dependencies:
+     ```bash
+     pip install -r requirements.txt
+     ```
 
-3. Install the required dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
+3. **Frontend Setup**:
+   - Navigate to the `frontend` directory:
+     ```bash
+     cd frontend
+     ```
+   - Install Node.js dependencies:
+     ```bash
+     npm install
+     ```
+   - Start the React development server:
+     ```bash
+     npm start
+     ```
 
 ---
 
-## **Configuration**
+## **BackEnd Configuration**
 1. Create a `.env` file in the project root:
    ```bash
    touch .env
@@ -74,13 +95,46 @@ Welcome to the Art Exhibitor project! This application retrieves and displays NF
 
 ---
 
+## **Frontend Setup**
+1. Navigate to the `frontend` directory:
+   ```bash
+   cd frontend
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Start the React development server:
+   ```bash
+   npm start
+   ```
+
+4. Open `http://localhost:3000` in your browser to view the app.
+
+---
+
 ## **Usage**
-*TODO*
+1. **Backend**:
+   - Ensure your virtual environment is activated and start the backend server (if applicable):
+     ```bash
+     python src/app.py
+     ```
+
+2. **Frontend**:
+   - Navigate to the `frontend` directory and start the development server:
+     ```bash
+     npm start
+     ```
+
+3. Interact with the application via the browser.
 
 ---
 
 ## **Testing**
-1. Run all tests:
+### Backend
+1. Run all backend tests:
    ```bash
    ./run_tests.sh
    ```
@@ -88,6 +142,12 @@ Welcome to the Art Exhibitor project! This application retrieves and displays NF
 2. View coverage report:
    ```bash
    pytest --cov=src --cov-report=term-missing
+   ```
+
+### Frontend
+1. Run React tests:
+   ```bash
+   npm test
    ```
 
 ---
@@ -114,6 +174,7 @@ Welcome to the Art Exhibitor project! This application retrieves and displays NF
 
 Feel free to reach out for any questions or suggestions!
 
+---
 
 ## Class Descriptions
 
