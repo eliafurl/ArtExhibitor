@@ -7,7 +7,8 @@ from src.services.api_client import APIClient
 class TestNFTFetcher(unittest.TestCase):
     def setUp(self):
         self.mock_api_client = MagicMock(spec=APIClient)
-        self.fetcher = NFTFetcher(self.mock_api_client)
+        self.fetcher = NFTFetcher(api_key="000")
+        self.fetcher.api_client = self.mock_api_client
 
     def test_fetch_nfts(self):
         # Mock response
