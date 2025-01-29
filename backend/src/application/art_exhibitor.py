@@ -3,10 +3,10 @@ from src.services.nft_fetcher import NFTFetcher
 from src.models.nft_metadata import NFTMetadata
 
 class ArtExhibitor:
-    def __init__(self, fetcher: NFTFetcher):
+    def __init__(self, api_key: str):
         self.wallets: List[str] = []
         self.nft_data: Dict[str, List[NFTMetadata]] = {}
-        self.fetcher = fetcher
+        self.fetcher = NFTFetcher(api_key)
 
     def add_wallet(self, address: str):
         if address not in self.wallets:

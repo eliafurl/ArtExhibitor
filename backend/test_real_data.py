@@ -1,6 +1,4 @@
 from src.application.art_exhibitor import ArtExhibitor
-from src.services.api_client import APIClient
-from src.services.nft_fetcher import NFTFetcher
 from src.utils.setup_env import OPENSEA_API_KEY
 from src.utils.setup_env import TEST_WALLET_1
 
@@ -8,14 +6,8 @@ from src.utils.setup_env import TEST_WALLET_1
 TEST_WALLET = TEST_WALLET_1
 print(f"Testing on wallet: {TEST_WALLET}")
 
-# Initialize the API Client
-api_client = APIClient(base_url="https://api.opensea.io/api/v2", api_key=OPENSEA_API_KEY)
-
-# Initialize NFT Fetcher
-nft_fetcher = NFTFetcher(api_client)
-
 # Initialize Art Exhibitor
-art_exhibitor = ArtExhibitor(fetcher=nft_fetcher)
+art_exhibitor = ArtExhibitor(OPENSEA_API_KEY)
 
 # Add the wallet and fetch NFTs
 art_exhibitor.add_wallet(TEST_WALLET)
