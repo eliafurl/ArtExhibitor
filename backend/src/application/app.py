@@ -20,7 +20,9 @@ def get_nfts():
     try:
         # Use ArtExhibitor to fetch NFTs for the wallet
         nfts = _art_exhibitor.get_nfts(wallet)
-        return jsonify(nfts)
+        nft_data = [nft.to_dict() for nft in nfts]
+
+        return jsonify(nft_data)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
     
