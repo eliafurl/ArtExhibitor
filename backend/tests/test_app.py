@@ -55,6 +55,20 @@ class TestApp(unittest.TestCase):
         self.assertEqual(response.json, {"error": "Wallet address is required"})
 
     @patch("src.application.app._art_exhibitor")
+    def test_get_wallets(self, mock_art_exhibitor):
+        """Test the /api/wallets endpoint."""
+        # Mock ArtExhibitor's get_wallets method
+        mock_art_exhibitor.get_wallets.return_value = ["0x123", "0x456"]
+
+        # Perform the test request
+        response = self.client.get("/api/wallets")
+
+        # Assertions
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json, ["0x123", "0x456"])
+        mock_art_exhibitor.get_wallets.assert_called_once()
+
+    @patch("src.application.app._art_exhibitor")
     def test_get_nfts_error(self, mock_art_exhibitor):
         """Test the /api/nfts endpoint when an exception occurs."""
         # Mock ArtExhibitor's get_nfts method to raise an exception

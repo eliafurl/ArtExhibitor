@@ -25,7 +25,12 @@ def get_nfts():
         return jsonify(nft_data)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-    
+
+@app.route('/api/wallets', methods=['GET'])
+def get_wallets():
+    wallets = _art_exhibitor.get_wallets()
+    return jsonify(wallets)
+
 @app.route("/")
 def home():
     return "ArtExhibitor is running!"
