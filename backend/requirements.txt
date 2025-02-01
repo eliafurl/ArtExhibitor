@@ -2,4 +2,4 @@ requests
 pytest
 pytest-cov
 python-dotenv
-flask
+flaskflask_cors
