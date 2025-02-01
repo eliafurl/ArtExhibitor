@@ -19,6 +19,10 @@ def get_nfts():
         return jsonify(nfts)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+@app.route("/")
+def home():
+    return "ArtExhibitor is running!"
 
 if __name__ == '__main__':
     app.run(debug=True)
