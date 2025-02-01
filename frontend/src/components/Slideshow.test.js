@@ -2,33 +2,47 @@ import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import Slideshow from "./Slideshow";
 import { fetchNFTs } from "../services/api";
+import userEvent from "@testing-library/user-event";
 
-// Mock API service
+// Mock fetchNFTs function
 jest.mock("../services/api", () => ({
   fetchNFTs: jest.fn(),
 }));
 
 describe("Slideshow Component", () => {
-    test("renders NFTs in a slideshow", async () => {
-      const mockNFTs = [
-        { name: "Artwork 1", artist: "Artist 1", image_url: "https://arweave.net/KQJhmrTn_N6aWZy90NF476BC2n4qVoOu85df6yiL2lI" },
-        { name: "Artwork 2", artist: "Artist 2", image_url: "https://arweave.net/c354rSc2YXAYmeRgmAM3dEoRoOPY9Fdwy_tWHLtCEWI" },
-      ];
-  
-      fetchNFTs.mockResolvedValueOnce(mockNFTs);
+  test("renders loading state when fetching NFTs", async () => {
+    fetchNFTs.mockResolvedValueOnce([]); // Mock empty response
+    render(<Slideshow wallets={["0x123"]} interval={3000} />);
 
-    // Render the component
-    render(<Slideshow />);
+    expect(screen.getByText("Loading NFTs...")).toBeInTheDocument();
+    await waitFor(() => expect(screen.queryByText("Loading NFTs...")).not.toBeInTheDocument());
+  });
 
-    // Wait for NFTs to be fetched and rendered
-    await waitFor(() => {
-      const artwork1Elements = screen.getAllByText("Artwork 1");
-      const artwork2Elements = screen.getAllByText("Artwork 2");
+  test("displays NFTs when fetched successfully", async () => {
+    fetchNFTs.mockResolvedValueOnce([
+      { name: "Artwork 1", artist: "Artist 1", image_url: "https://arweave.net/KQJhmrTn_N6aWZy90NF476BC2n4qVoOu85df6yiL2lI" },
+    ]);
 
-      // Check that duplicates are rendered (due to react-slick)
-      expect(artwork1Elements.length).toBeGreaterThanOrEqual(2);
-      expect(artwork2Elements.length).toBeGreaterThanOrEqual(2);
-    });
+    render(<Slideshow wallets={["0x123"]} interval={3000} />);
+
+    await waitFor(() => expect(screen.getAllByText("Artwork 1").length).toBeGreaterThanOrEqual(2));
+    expect(screen.getAllByText("Artist 1").length).toBeGreaterThanOrEqual(2);
+    expect(screen.getAllByAltText("Artwork 1").length).toBeGreaterThanOrEqual(2);
+  });
+
+  test("shows error message when API fails", async () => {
+    fetchNFTs.mockRejectedValueOnce(new Error("Network error"));
+
+    render(<Slideshow wallets={["0x123"]} interval={3000} />);
+
+    await waitFor(() => expect(screen.getByText("Failed to load NFTs. Please try again.")).toBeInTheDocument());
+  });
+
+  test("displays 'No NFTs found' when wallet has no NFTs", async () => {
+    fetchNFTs.mockResolvedValueOnce([]);
+
+    render(<Slideshow wallets={["0x123"]} interval={3000} />);
+
+    await waitFor(() => expect(screen.getByText("No NFTs found. Add a wallet to get started.")).toBeInTheDocument());
   });
 });
-  

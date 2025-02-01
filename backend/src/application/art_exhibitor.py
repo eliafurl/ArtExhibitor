@@ -22,4 +22,8 @@ class ArtExhibitor:
             self.nft_data[wallet] = self.fetcher.fetch_nfts(wallet)
 
     def get_nfts(self, address: str) -> List[NFTMetadata]:
-        return self.nft_data.get(address, [])
+        if self.nft_data.get(address) is None:
+            if address not in self.wallets:
+                self.add_wallet(address)
+            self.refresh_nfts()
+        return self.nft_data.get(address)

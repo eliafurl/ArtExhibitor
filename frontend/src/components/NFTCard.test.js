@@ -12,13 +12,27 @@ describe("NFTCard Component", () => {
 
     render(<NFTCard nft={mockNFT} />);
 
-    // Check if the image is rendered
-    const imageElement = screen.getByAltText("Artwork 1");
-    expect(imageElement).toBeInTheDocument();
-    expect(imageElement).toHaveAttribute("src", "http://example.com/nft1.png");
-
-    // Check if the name and artist are rendered
     expect(screen.getByText("Artwork 1")).toBeInTheDocument();
     expect(screen.getByText("Artist 1")).toBeInTheDocument();
+
+    // Check that the image has the correct src
+    const imageElement = screen.getByRole("img");
+    expect(imageElement).toHaveAttribute("src", "http://example.com/nft1.png");
+    expect(imageElement).toHaveAttribute("alt", "Artwork 1");
+  });
+
+  test("displays fallback image when image_url is missing", () => {
+    const mockNFT = {
+      name: null,
+      artist: "Artist 2",
+      image_url: null,
+    };
+
+    render(<NFTCard nft={mockNFT} />);
+
+    // Check that the image source is the fallback image
+    const imageElement = screen.getByRole("img");
+    expect(imageElement).toHaveAttribute("src", "https://arweave.net/c354rSc2YXAYmeRgmAM3dEoRoOPY9Fdwy_tWHLtCEWI");
+    expect(imageElement).toHaveAttribute("alt", "NFT Image");
   });
 });

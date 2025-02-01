@@ -27,10 +27,6 @@ class TestArtExhibitor(unittest.TestCase):
         self.exhibitor.refresh_nfts()
         self.assertEqual(len(self.exhibitor.get_nfts("0xTestWallet")), 1)
 
-    def test_get_nfts_empty(self):
-        nfts = self.exhibitor.get_nfts("0xNonExistentWallet")
-        self.assertEqual(nfts, [])
-
     def test_get_nfts_with_data(self):
         self.exhibitor.add_wallet("0xTestWallet")
         self.exhibitor.refresh_nfts()

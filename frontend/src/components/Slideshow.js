@@ -5,16 +5,31 @@ import "slick-carousel/slick/slick-theme.css";
 import { fetchNFTs } from "../services/api";
 import NFTCard from "./NFTCard";
 
-function Slideshow() {
+function Slideshow({ wallets, interval }) {
   const [nfts, setNfts] = useState([]);
-  const [interval, setInterval] = useState(3000); // Default interval in ms
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Fetch NFT data from backend
-    fetchNFTs()
-      .then((data) => setNfts(data))
-      .catch((error) => console.error("Error fetching NFTs:", error));
-  }, []);
+    const loadNFTs = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const results = await Promise.all(wallets.map(fetchNFTs));
+        const allNFTs = results.flat(); // Merge arrays into one list
+        setNfts(allNFTs);
+      } catch (err) {
+        setError("Failed to load NFTs. Please try again.");
+      }
+      setLoading(false);
+    };
+
+    if (wallets.length > 0) {
+      loadNFTs();
+    } else {
+      setNfts([]);
+    }
+  }, [wallets]);
 
   const sliderSettings = {
     dots: true,
@@ -29,11 +44,16 @@ function Slideshow() {
   return (
     <div>
       <h2>NFT Slideshow</h2>
-      <Slider {...sliderSettings}>
-        {nfts.map((nft, index) => (
-          <NFTCard key={index} nft={nft} />
-        ))}
-      </Slider>
+      {loading && <p>Loading NFTs...</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
+      {!loading && nfts.length === 0 && <p>No NFTs found. Add a wallet to get started.</p>}
+      {nfts.length > 0 && (
+        <Slider {...sliderSettings}>
+          {nfts.map((nft, index) => (
+            <NFTCard key={index} nft={nft} />
+          ))}
+        </Slider>
+      )}
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import unittest
 from unittest.mock import MagicMock, patch
 from src.application.app import app
+from src.models.nft_metadata import NFTMetadata
 
 class TestApp(unittest.TestCase):
     def setUp(self):
@@ -11,16 +12,16 @@ class TestApp(unittest.TestCase):
     @patch("src.application.app._art_exhibitor")
     def test_get_nfts_success(self, mock_art_exhibitor):
         """Test the /api/nfts endpoint with a valid wallet."""
+        # Create mock NFTMetadata objects
+        mock_nft = NFTMetadata(
+            name="Artwork 1",
+            description="Test NFT",
+            image_url="http://example.com/nft1.png",
+            contract_address="0xabc",
+            token_id="1"
+        )
         # Mock ArtExhibitor's get_nfts method
-        mock_art_exhibitor.get_nfts.return_value = [
-            {
-                "name": "Artwork 1",
-                "artist": "Artist 1",
-                "image_url": "http://example.com/nft1.png",
-                "contract_address": "0xabc",
-                "token_id": "1",
-            }
-        ]
+        mock_art_exhibitor.get_nfts.return_value = [mock_nft]
 
         # Perform the test request
         wallet = "0x123"
@@ -36,7 +37,7 @@ class TestApp(unittest.TestCase):
             [
                 {
                     "name": "Artwork 1",
-                    "artist": "Artist 1",
+                    "description": "Test NFT",
                     "image_url": "http://example.com/nft1.png",
                     "contract_address": "0xabc",
                     "token_id": "1",

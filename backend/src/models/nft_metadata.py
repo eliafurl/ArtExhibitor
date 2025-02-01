@@ -15,3 +15,13 @@ class NFTMetadata:
             contract_address=data.get("asset_contract", {}).get("address", ""),
             token_id=data.get("token_id", "")
         )
+    
+    def to_dict(self):
+        """Convert NFTMetadata object to dictionary for JSON serialization."""
+        return {
+            "name": self.name,
+            "description": self.description,
+            "image_url": self.image_url,
+            "contract_address": self.contract_address,
+            "token_id": self.token_id,
+        }
