@@ -66,7 +66,7 @@ GET /api/nfts
 
 #### **Request Example**
 ```
-GET /api/nfts?wallet=0x23C37B17F87c5033C160f113E7EB65D9a9B857DE
+GET /api/nfts?wallet=0xabc123...
 ```
 
 ---
