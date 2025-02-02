@@ -69,6 +69,17 @@ class TestApp(unittest.TestCase):
         mock_art_exhibitor.get_wallets.assert_called_once()
 
     @patch("src.application.app._art_exhibitor")
+    def test_delete_wallet(self, mock_art_exhibitor):
+        """Test the /api/wallets/<wallet> DELETE endpoint."""
+        # Perform the test request
+        wallet = "0x123"
+        response = self.client.delete(f"/api/wallets/{wallet}")
+
+        # Assertions
+        self.assertEqual(response.status_code, 204)
+        mock_art_exhibitor.remove_wallet.assert_called_once_with(wallet)
+
+    @patch("src.application.app._art_exhibitor")
     def test_get_nfts_error(self, mock_art_exhibitor):
         """Test the /api/nfts endpoint when an exception occurs."""
         # Mock ArtExhibitor's get_nfts method to raise an exception
