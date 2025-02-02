@@ -94,6 +94,13 @@ class TestApp(unittest.TestCase):
         self.assertEqual(response.json, {"error": "Mocked exception"})
         mock_art_exhibitor.get_nfts.assert_called_once_with(wallet)
 
+    def test_home(self):
+        """Test the /api/ endpoint."""
+        response = self.client.get("/api/")
+
+        # Assertions
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data.decode("utf-8"), "ArtExhibitor is running!")
 
 if __name__ == "__main__":
     unittest.main()

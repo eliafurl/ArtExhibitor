@@ -36,7 +36,7 @@ def delete_wallet(wallet):
     _art_exhibitor.remove_wallet(wallet)
     return '', 204 # No content
 
-@app.route("/")
+@app.route('/api/')
 def home():
     return "ArtExhibitor is running!", 200 # OK
 
