@@ -17,6 +17,9 @@ class ArtExhibitor:
             self.wallets.remove(address)
             self.nft_data.pop(address, None)
 
+    def get_wallets(self) -> List[str]:
+        return self.wallets
+
     def refresh_nfts(self):
         for wallet in self.wallets:
             self.nft_data[wallet] = self.fetcher.fetch_nfts(wallet)

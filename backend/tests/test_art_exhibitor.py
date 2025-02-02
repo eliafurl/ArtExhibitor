@@ -22,6 +22,11 @@ class TestArtExhibitor(unittest.TestCase):
         self.exhibitor.remove_wallet("0xTestWallet")
         self.assertNotIn("0xTestWallet", self.exhibitor.wallets)
 
+    def test_get_wallets(self):
+        self.exhibitor.add_wallet("0xTestWallet")
+        self.exhibitor.add_wallet("0xTestWallet2")
+        self.assertEqual(self.exhibitor.get_wallets(), ["0xTestWallet", "0xTestWallet2"])
+
     def test_refresh_nfts(self):
         self.exhibitor.add_wallet("0xTestWallet")
         self.exhibitor.refresh_nfts()
