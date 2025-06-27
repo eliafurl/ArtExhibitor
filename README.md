@@ -45,81 +45,57 @@ Welcome to the Art Exhibitor project! This application retrieves and displays NF
 
 2. **Backend Setup**:
    - Create and activate a virtual environment:
-     ```bash
-     python -m venv art_exhibitor
-     source art_exhibitor/bin/activate  # For Linux/Mac
-     art_exhibitor\Scripts\activate   # For Windows
-     ```
+      ```bash
+      cd backend
+      python -m venv art_exhibitor
+      source art_exhibitor/bin/activate  # For Linux/Mac
+      art_exhibitor\Scripts\activate   # For Windows
+      ```
    - Install the required dependencies:
-     ```bash
-     pip install -r requirements.txt
-     ```
+      ```bash
+      pip install -r requirements.txt
+      ```
+   - Create a `.env` file in the project root:
+      ```bash
+      touch .env
+      ```
+   - Add your OpenSea API key to the `.env` file: ([How to get an OpenSea API key](https://docs.opensea.io/reference/api-keys))
+      ```plaintext
+      OPENSEA_API_KEY=<your_api_key_here>
+      ```
+   - Add your test wallets to the `.env` file:
+      ```plaintext
+      TEST_WALLET_1=<your_wallet_1_address_here>
+      TEST_WALLET_2=<your_wallet_2_address_here>
+      ```
 
 3. **Frontend Setup**:
    - Navigate to the `frontend` directory:
-     ```bash
-     cd frontend
-     ```
+      ```bash
+      cd frontend
+      ```
    - Install Node.js dependencies:
-     ```bash
-     npm install
-     ```
+      ```bash
+      npm install
+      ```
    - Start the React development server:
-     ```bash
-     npm start
-     ```
-
----
-
-## **BackEnd Configuration**
-1. Create a `.env` file in the project root:
-   ```bash
-   touch .env
-   ```
-
-2. Add your OpenSea API key to the `.env` file: ([How to get an OpenSea API key](https://docs.opensea.io/reference/api-keys))
-   ```plaintext
-   OPENSEA_API_KEY=your_api_key_here
-   ```
-
-3. Add your test wallets to the `.env` file:
-   ```plaintext
-   TEST_WALLET_1=your_wallet_1_address_here
-   TEST_WALLET_2=your_wallet_2_address_here
-   ```
-
----
-
-## **Frontend Setup**
-1. Navigate to the `frontend` directory:
-   ```bash
-   cd frontend
-   ```
-
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-3. Start the React development server:
-   ```bash
-   npm start
-   ```
-
-4. Open `http://localhost:3000` in your browser to view the app.
-
----
+      ```bash
+      npm start
+      ```
+   - Open `http://localhost:3000` in your browser to view the app.
 
 ## **Usage**
 1. **Backend**:
-   - Ensure your virtual environment is activated and start the backend server (if applicable):
+   - Ensure your virtual environment is activated, Navigate to the `backend` directory, and start the backend server:
      ```bash
+     cd backend
      python src/app.py
      ```
 
 2. **Frontend**:
    - Navigate to the `frontend` directory and start the development server:
      ```bash
+     cd frontend
      npm start
      ```
 
@@ -131,6 +107,7 @@ Welcome to the Art Exhibitor project! This application retrieves and displays NF
 ### Backend
 1. Run all backend tests:
    ```bash
+   cd backend
    ./run_tests.sh
    ```
 
@@ -142,6 +119,7 @@ Welcome to the Art Exhibitor project! This application retrieves and displays NF
 ### Frontend
 1. Run React tests:
    ```bash
+   cd frontend
    npm test
    ```
 
