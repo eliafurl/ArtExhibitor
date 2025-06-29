@@ -69,14 +69,33 @@ class TestApp(unittest.TestCase):
         mock_art_exhibitor.get_wallets.assert_called_once()
 
     @patch("src.application.app._art_exhibitor")
-    def test_delete_wallet(self, mock_art_exhibitor):
+    def test_delete_wallet_found(self, mock_art_exhibitor):
         """Test the /api/wallets/<wallet> DELETE endpoint."""
+        # Mock remove_wallet to ensure it returns None
+        mock_art_exhibitor.remove_wallet.return_value = True
+
         # Perform the test request
         wallet = "0x123"
         response = self.client.delete(f"/api/wallets/{wallet}")
 
         # Assertions
         self.assertEqual(response.status_code, 204)
+        self.assertEqual(response.data, b"")
+        mock_art_exhibitor.remove_wallet.assert_called_once_with(wallet)
+
+    @patch("src.application.app._art_exhibitor")
+    def test_delete_wallet_not_found(self, mock_art_exhibitor):
+        """Test the /api/wallets/<wallet> DELETE endpoint."""
+        # Mock remove_wallet to ensure it returns None
+        mock_art_exhibitor.remove_wallet.return_value = False
+
+        # Perform the test request
+        wallet = "0xnotfound"
+        response = self.client.delete(f"/api/wallets/{wallet}")
+
+        # Assertions
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.json, {"error": "Wallet not found"})
         mock_art_exhibitor.remove_wallet.assert_called_once_with(wallet)
 
     @patch("src.application.app._art_exhibitor")

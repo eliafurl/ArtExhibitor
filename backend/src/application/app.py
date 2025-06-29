@@ -33,8 +33,23 @@ def get_wallets():
 
 @app.route('/api/wallets/<wallet>', methods=['DELETE'])
 def delete_wallet(wallet):
-    _art_exhibitor.remove_wallet(wallet)
-    return '', 204 # No content
+    """
+    Delete a wallet from the ArtExhibitor system.
+
+    Args:
+        wallet (str): The wallet address to be removed.
+
+    Returns:
+        Empty response with HTTP 204 status code if successful,
+        or 404 if the wallet was not found.
+    """
+    try:
+        removed = _art_exhibitor.remove_wallet(wallet)
+        if not removed:
+            return jsonify({"error": "Wallet not found"}), 404
+        return '', 204  # No content
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 @app.route('/api/')
 def home():
