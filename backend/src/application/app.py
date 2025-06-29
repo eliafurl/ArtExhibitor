@@ -1,7 +1,10 @@
+import logging
 from flask import Flask, request, jsonify, Response
 from flask_cors import CORS
 from src.application.art_exhibitor import ArtExhibitor
 from src.utils.setup_env import OPENSEA_API_KEY
+
+logging.basicConfig(level=logging.INFO)
 
 app = Flask(__name__)
 
@@ -33,6 +36,7 @@ def get_nfts() -> Response:
 
         return jsonify(nft_data), 200 # OK
     except Exception as e:
+        logging.exception(f"Exception in /api/nfts:")
         return jsonify({"error": str(e)}), 500 # Internal server error
 
 @app.route('/api/wallets', methods=['GET'])
@@ -64,6 +68,7 @@ def delete_wallet(wallet) -> Response:
             return jsonify({"error": "Wallet not found"}), 404
         return '', 204  # No content
     except Exception as e:
+        logging.exception(f"Exception in /api/wallets/<wallet>:")
         return jsonify({"error": str(e)}), 500
 
 @app.route('/api/')
