@@ -12,10 +12,12 @@ class ArtExhibitor:
         if address not in self.wallets:
             self.wallets.append(address)
 
-    def remove_wallet(self, address: str):
+    def remove_wallet(self, address: str) -> bool:
         if address in self.wallets:
             self.wallets.remove(address)
             self.nft_data.pop(address, None)
+            return True
+        return False
 
     def get_wallets(self) -> List[str]:
         return self.wallets
