@@ -22,13 +22,7 @@ export const fetchNFTsAPI = async (wallet) => {
 
 export const removeWalletAPI = async (wallet) => {
   try {
-    const response = await axios.delete(`${BASE_URL}/api/wallets/${wallet}`);
-
-    if (response.status === 204) {
-      return { success: true }; // Return a simple object to avoid undefined responses
-    }
-
-    return response;
+    return await axios.delete(`${BASE_URL}/api/wallets/${wallet}`);
   } catch (error) {
     console.error("Error removing wallet:", error);
     throw error;
