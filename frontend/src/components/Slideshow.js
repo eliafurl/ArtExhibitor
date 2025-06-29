@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { fetchNFTs } from "../services/api";
+import { fetchNFTsAPI } from "../services/api";
 import NFTCard from "./NFTCard";
 
 function Slideshow({ wallets, interval }) {
@@ -15,7 +15,7 @@ function Slideshow({ wallets, interval }) {
       setLoading(true);
       setError(null);
       try {
-        const results = await Promise.all(wallets.map(fetchNFTs));
+        const results = await Promise.all(wallets.map(fetchNFTsAPI));
         const allNFTs = results.flat(); // Merge arrays into one list
         setNfts(allNFTs);
       } catch (err) {

@@ -2,6 +2,9 @@ import React from "react";
 import { render, fireEvent, screen } from "@testing-library/react";
 import App from "./App";
 
+// Mock window.alert
+global.alert = jest.fn();
+
 describe("App Component", () => {
   test("adds and removes wallets via ControlPanel", () => {
     render(<App />);
