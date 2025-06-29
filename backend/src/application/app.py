@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Response
 from flask_cors import CORS
 from src.application.art_exhibitor import ArtExhibitor
 from src.utils.setup_env import OPENSEA_API_KEY
@@ -12,7 +12,16 @@ CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000"}})
 _art_exhibitor = ArtExhibitor(api_key=OPENSEA_API_KEY)
 
 @app.route('/api/nfts', methods=['GET'])
-def get_nfts():
+def get_nfts() -> Response:
+    """
+    Endpoint to retrieve NFTs for a specific wallet.
+    Query Parameters:
+        wallet (str): The wallet address to fetch NFTs for.
+    Returns:
+        Response: A JSON response containing the list of NFTs and a 200 OK status code,
+                  or an error message with a 400 or 500 status code.
+    """
+    # Get the wallet address from query parameters
     wallet = request.args.get('wallet')
     if not wallet:
         return jsonify({"error": "Wallet address is required"}), 400 # Bad request
@@ -27,12 +36,18 @@ def get_nfts():
         return jsonify({"error": str(e)}), 500 # Internal server error
 
 @app.route('/api/wallets', methods=['GET'])
-def get_wallets():
+def get_wallets() -> Response:
+    """
+    Endpoint to retrieve a list of wallets.
+
+    Returns:
+        Response: A JSON response containing the list of wallets and a 200 OK status code.
+    """
     wallets = _art_exhibitor.get_wallets()
     return jsonify(wallets), 200 # OK
 
 @app.route('/api/wallets/<wallet>', methods=['DELETE'])
-def delete_wallet(wallet):
+def delete_wallet(wallet) -> Response:
     """
     Delete a wallet from the ArtExhibitor system.
 
@@ -52,8 +67,21 @@ def delete_wallet(wallet):
         return jsonify({"error": str(e)}), 500
 
 @app.route('/api/')
-def home():
+def home() -> Response:
+    """ Home endpoint to check if the ArtExhibitor is running.
+    Returns:
+        Response: A simple message indicating the service is running with a 200 OK status code.
+    """
+    # This endpoint can be used to check if the service is running
     return "ArtExhibitor is running!", 200 # OK
 
 if __name__ == '__main__':
+    # Run the Flask application
+
+    # This will allow the application to be accessed from any IP address on port 5001.
+    # Make sure to set the OPENSEA_API_KEY environment variable before running the application.
+    # You can set it in your terminal or in a .env file if you're using a library like python-dotenv.
+    # Example: export OPENSEA_API_KEY='your_opensea_api_key_here' 
     app.run(host="0.0.0.0", port=5001, debug=True)
+    # Note: The debug=True option is set for development purposes.
+    # In production, it should be set to False or removed.
